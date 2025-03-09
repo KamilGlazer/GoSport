@@ -26,3 +26,33 @@ body {
 .custom-italic {
   font-style: italic !important;
 }
+
+
+.nav-link {
+  position: relative;
+  font-size: 1rem;
+  font-weight: 6400;
+  color: #1f2937; 
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  padding-bottom: 5px; 
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background-color: #2563eb; 
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #2563eb; 
+}
+
+.nav-link:hover::before {
+  width: 100%;
+}
