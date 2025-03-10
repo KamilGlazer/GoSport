@@ -26,7 +26,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-
     @Override
     public JwtResponse register(RegisterRequest request) {
         userRepository.findByEmail(request.getEmail())
