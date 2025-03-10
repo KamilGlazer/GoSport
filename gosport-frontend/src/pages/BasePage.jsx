@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
 import sportsImage from "../assets/sports.png";
 import sports2Image from "../assets/sports2.png";
+import sports3Image from "../assets/sport3.png";
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -12,8 +13,8 @@ import {
   FaChalkboardTeacher,
   FaFacebook,
   FaInstagram,
-  FaTwitter,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const sportsCategories = [
   "Football",
@@ -205,7 +206,7 @@ const BasePage = () => {
 
             <ul className="mt-6 space-y-6">
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaUsers />
                 </div>
                 <div>
@@ -220,7 +221,7 @@ const BasePage = () => {
               </li>
 
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaDumbbell />
                 </div>
                 <div>
@@ -235,7 +236,7 @@ const BasePage = () => {
               </li>
 
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaShieldAlt />
                 </div>
                 <div>
@@ -253,7 +254,7 @@ const BasePage = () => {
 
           <div className="w-1/2 flex justify-center">
             <img
-              src={sports2Image}
+              src={sports3Image}
               alt="GoSport Community"
               className="max-w-md"
             />
@@ -287,11 +288,11 @@ const BasePage = () => {
 
             <ul className="mt-6 space-y-6">
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaChalkboardTeacher />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 ">
                     Share Your Knowledge
                   </h3>
                   <p className="text-gray-600 text-sm">
@@ -302,7 +303,7 @@ const BasePage = () => {
               </li>
 
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaUsers />
                 </div>
                 <div>
@@ -317,7 +318,7 @@ const BasePage = () => {
               </li>
 
               <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
                   <FaChartLine />
                 </div>
                 <div>
@@ -356,7 +357,7 @@ const BasePage = () => {
               <div className="flex gap-3">
                 <a
                   href="#"
-                  className="p-2 bg-gray-100 rounded-full border border-gray-400 transition-all duration-300 hover:scale-110 hover:bg-blue-50 hover:border-blue-500"
+                  className="p-2 bg-gray-100 rounded-full border border-gray-400 transition-all duration-300 hover:scale-110 hover:text-blue-600 hover:border-blue-500"
                 >
                   <FaFacebook className="text-gray-600 w-5 h-5 transition-all duration-300 hover:text-blue-600" />
                 </a>
@@ -370,7 +371,7 @@ const BasePage = () => {
                   href="#"
                   className="p-2 bg-gray-100 rounded-full border border-gray-400 transition-all duration-300 hover:scale-110 hover:bg-blue-50 hover:border-blue-500"
                 >
-                  <FaTwitter className="text-gray-600 w-5 h-5 transition-all duration-300 hover:text-blue-600" />
+                  <FaXTwitter   className="text-gray-600 w-5 h-5 transition-all duration-300 hover:text-blue-600" />
                 </a>
               </div>
             </div>
