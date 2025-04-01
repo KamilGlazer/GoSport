@@ -32,7 +32,7 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-      await register({ email, password });
+      await register({ email, password, firstName,lastName, dateOfBirth});
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Błąd rejestracji");

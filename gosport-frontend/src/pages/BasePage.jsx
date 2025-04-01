@@ -72,9 +72,6 @@ const BasePage = () => {
             <a href="#about" className="nav-link">
               About us
             </a>
-            <a href="#trainers" className="nav-link">
-              For trainers
-            </a>
             <Link
               to="/login"
               className="text-base font-medium text-white bg-blue-500 px-10 py-2 rounded-3xl hover:bg-blue-600"
@@ -254,7 +251,7 @@ const BasePage = () => {
 
           <div className="w-1/2 flex justify-center">
             <img
-              src={sports3Image}
+              src={sports2Image}
               alt="GoSport Community"
               className="max-w-md"
             />
@@ -262,88 +259,7 @@ const BasePage = () => {
         </div>
       </section>
 
-      <section
-        id="trainers"
-        className="w-full flex justify-center bg-white px-10 py-20"
-      >
-        <div className="w-4/5 max-w-[1400px] flex flex-col md:flex-row items-center justify-between">
-          <div className="w-1/2 flex justify-center">
-            <img
-              src={sports2Image}
-              alt="GoSport Trainers"
-              className="max-w-md rounded-lg "
-            />
-          </div>
-
-          <div className="w-1/2">
-            <h2 className="text-4xl font-bold text-center text-gray-900 leading-tight relative after:content-[''] after:block after:w-24 after:h-1 after:bg-blue-500 after:mx-auto">
-              For Trainers
-            </h2>
-            <p className="text-gray-600 text-lg mt-4">
-              Are you a coach, personal trainer, or fitness expert? Join GoSport
-              and connect with athletes looking for guidance. Expand your reach,
-              grow your business, and help athletes achieve their full
-              potential.
-            </p>
-
-            <ul className="mt-6 space-y-6">
-              <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
-                  <FaChalkboardTeacher />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 ">
-                    Share Your Knowledge
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Offer training plans, workout routines, and expert insights
-                    to athletes worldwide.
-                  </p>
-                </div>
-              </li>
-
-              <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
-                  <FaUsers />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Expand Your Network
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Connect with a growing community of passionate athletes and
-                    fellow trainers.
-                  </p>
-                </div>
-              </li>
-
-              <li className="flex items-center space-x-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 text-xl hover:scale-120 duration-600">
-                  <FaChartLine />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Grow Your Business
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Offer personalized coaching, track progress, and increase
-                    your visibility in the sports industry.
-                  </p>
-                </div>
-              </li>
-            </ul>
-
-            <div className="mt-8">
-              <a
-                href="/register"
-                className="px-6 py-3 text-white bg-blue-500 rounded-full font-semibold hover:bg-blue-600 transition-all"
-              >
-                Join as a Trainer
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+    
       <footer className="w-full bg-gray-100 py-10 px-10">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-12">

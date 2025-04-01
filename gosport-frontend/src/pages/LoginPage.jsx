@@ -5,6 +5,8 @@ import { login } from "../services/authApi";
 import { useNavigate } from "react-router-dom";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import logo from "../assets/fans.png";
+import { useAuth } from "../contexts/AuthContext";
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +14,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
+  const { validateToken } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,6 +22,9 @@ const LoginPage = () => {
     try {
       const data = await login({ email, password });
       dispatch(loginSuccess(data));
+
+      await validateToken();
+
       navigate("/dashboard");
     } catch (err) {
       dispatch(loginFailure(err.response?.data?.message || "Blad logowania"));
