@@ -31,3 +31,6 @@ server:
 
 app:
   secret-key: ${SECRET_KEY}
+
+upload:
+  dir: uploads

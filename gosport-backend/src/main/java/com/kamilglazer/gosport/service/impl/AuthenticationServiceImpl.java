@@ -7,6 +7,7 @@ import com.kamilglazer.gosport.dto.response.JwtResponse;
 import com.kamilglazer.gosport.exception.UserNotFoundException;
 import com.kamilglazer.gosport.exception.UserWithThisEmailAlreadyExists;
 import com.kamilglazer.gosport.model.User;
+import com.kamilglazer.gosport.model.UserCredentials;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .mobile(request.getMobile())
                 .build();
+
+        user.setCredentials(new UserCredentials());
 
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({UserNotFoundException.class, UserWithThisEmailAlreadyExists.class})
+    @ExceptionHandler({UserNotFoundException.class, UserWithThisEmailAlreadyExists.class,ProfileImageNotFoundException.class})
     public ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) {
         return createErrorResponse(ex, request);
     }

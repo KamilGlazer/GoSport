@@ -32,7 +32,6 @@ public class User implements UserDetails {
     private String email;
     private String firstName;
     private String lastName;
-    private String mobile;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -41,7 +40,6 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL)
     private UserCredentials credentials;
 
-    private String headline;
 
     @OneToMany(mappedBy = "sender",cascade = CascadeType.ALL)
     private List<Connection> sentConnections;

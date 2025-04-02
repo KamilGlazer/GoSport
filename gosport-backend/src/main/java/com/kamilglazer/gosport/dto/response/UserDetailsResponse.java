@@ -1,26 +1,20 @@
-package com.kamilglazer.gosport.model;
+package com.kamilglazer.gosport.dto.response;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
-@Table
-public class UserCredentials {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserDetailsResponse {
+    private String firstName;
+    private String lastName;
     private String headline;
     private String mobile;
     private String city;
     private String postalCode;
-    private String profileImage;
-
 }
