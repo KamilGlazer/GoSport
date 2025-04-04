@@ -45,7 +45,7 @@ public class ProfileController {
         Resource file = profileService.getAvatar(token);
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachement; filename=\"" + file.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,"inline; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
 }
