@@ -56,3 +56,53 @@ body {
 .nav-link:hover::before {
   width: 100%;
 }
+
+
+.loading-container {
+  width: 100vw;
+  height: 100vh; /* pełna wysokość okna */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centruje w pionie */
+  align-items: center;     /* centruje w poziomie */
+  gap: 10px;
+  padding: 20px 0;
+  box-sizing: border-box;
+  background-color: #f9f9f9; /* opcjonalnie: jasne tło */
+}
+
+.loading-bar {
+  width: 15%;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  width: 0;
+  background-color: #4285f4;
+  border-radius: 3px;
+  animation: loadingAnimation 1.5s ease-in-out infinite;
+}
+
+.loading-text {
+  color: #555;
+  font-size: 14px;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    width: 0;
+    margin-left: 0;
+  }
+  50% {
+    width: 100%;
+    margin-left: 0;
+  }
+  100% {
+    width: 0;
+    margin-left: 100%;
+  }
+}

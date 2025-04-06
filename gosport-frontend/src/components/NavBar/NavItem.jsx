@@ -10,6 +10,9 @@ const NavItem = ({ to, icon, text, isActive }) => {
                 {icon}
             </div>
             <span className="text-xs mt-1">{text}</span>
+            {isActive && (
+                <span className="absolute bottom-0 h-0.5 w-20 bg-blue-600 rounded-t-md"></span>
+            )}
         </Link>
     );
 };

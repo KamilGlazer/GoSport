@@ -5,6 +5,8 @@ import AuthRoute from './components/AuthRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import BasePage from './pages/BasePage'
 import Dashboard from './pages/DashboardPage';
+import ProfilePage from './pages/ProfilePage';
+import NotificationsPage from './pages/NotificationsPage';
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           
           <Route element={<AuthRoute isPrivate={true} />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/profile" element={<ProfilePage />}/>
+              <Route path="/dashboard/notifications" element={<NotificationsPage />}/>
           </Route>
 
         </Routes>

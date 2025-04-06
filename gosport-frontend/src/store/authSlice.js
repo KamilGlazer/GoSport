@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: null,
-    token : localStorage.getItem("token") || null,
+    token : null,
     loading: false,
     error: null
 };
@@ -19,10 +19,8 @@ const authSlice = createSlice({
         },
         loginSuccess: (state,action) => {
             state.loading = false;
-            state.user = action.payload.user;
+            state.user = action.payload.user || {};
             state.token = action.payload.token;
-            localStorage.setItem("token",action.payload.token);
-            console.log("TOKEN ZAPISANY DO LOCALSTORAGE:", localStorage.getItem("token"));
         },
         loginFailure: (state,action) => {
             state.loading = false;
@@ -31,11 +29,32 @@ const authSlice = createSlice({
         logout : (state) => {
             state.user = null;
             state.token = null;
-            localStorage.removeItem("token");
-        }
+        },
+        setAvatar: (state, action) => {
+            if (state.user) {
+                state.user.avatar = action.payload;
+            }
+        },
+        updateUserProfile: (state,action) => {
+            if (state.user) {
+                state.user = { 
+                  ...state.user, 
+                  ...action.payload 
+                };
+              } else {
+                state.user = action.payload;
+              }
+        },
+        setUserProfile: (state, action) => {
+            if (state.user) {
+              state.user.profile = action.payload;
+            } else {
+              state.user = { profile: action.payload };
+            }
+          },
     }
 });
 
-export const {loginStart,loginSuccess,loginFailure,logout} = authSlice.actions;
+export const {loginStart,loginSuccess,loginFailure,logout, setAvatar, updateUserProfile, setUserProfile  } = authSlice.actions;
 export default authSlice.reducer;
 

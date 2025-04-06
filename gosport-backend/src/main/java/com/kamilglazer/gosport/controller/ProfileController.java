@@ -26,6 +26,12 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.getUserProfile(id));
     }
 
+    @GetMapping
+    public ResponseEntity<UserDetailsResponse> getMyProfile(@RequestHeader("Authorization") String authHeader){
+        String token = jwtService.getToken(authHeader);
+        return ResponseEntity.ok(profileService.getMyProfile(token));
+    }
+
     @PutMapping
     public ResponseEntity<UserDetailsResponse> updateUserProfile(@RequestHeader("Authorization") String authHeader,@RequestBody UserDetailsResponse userDetailsResponse){
         String token = jwtService.getToken(authHeader);

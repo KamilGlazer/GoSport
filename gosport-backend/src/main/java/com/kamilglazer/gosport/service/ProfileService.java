@@ -10,4 +10,5 @@ public interface ProfileService {
     String uploadAvatar(String token, MultipartFile file);
     Resource getAvatar(String token);
     UserDetailsResponse updateUserProfile(String token, UserDetailsResponse userDetailsResponse);
+    UserDetailsResponse getMyProfile(String token);
 }

@@ -1,31 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import { FaHome, FaEnvelope, FaUserFriends, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaEnvelope, FaUserFriends, FaBell } from "react-icons/fa";
 import logo from "../../assets/fans.png"
 import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
-import ProfileDropdown from "./ProfileDropdown";
 import ProfileNavItem from "./ProfileNavItem";
 
 const NavBar = () => {
     const location = useLocation();
-
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
-
-    const closeDropdown = () => {
-        setIsDropdownOpen(false);
-    };
-
     return (
         <nav className="bg-white shadow-sm fixed top-0 w-full z-10">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex justify-between items-center h-19">
                     <div className="flex items-center">
-                        <Link to="/" className="flex-shrink-0">
+                        <Link to="/dashboard" className="flex-shrink-0">
                             <div className="flex items-center space-x-2 text-2xl font-[700]">
                                         <img src={logo} alt="Logo" className="h-13 w-13 scale-100 transition duration-700 ease-in-out hover:scale-115" />
                             </div>
@@ -35,10 +22,16 @@ const NavBar = () => {
 
                     <div className="flex items-center space-x-6">
                         <NavItem 
-                            to="/" 
+                            to="/dashboard" 
                             icon={<FaHome size={24} />} 
                             text="Main Page" 
-                            isActive={location.pathname === '/'} 
+                            isActive={location.pathname === '/dashboard'} 
+                        />
+                        <NavItem 
+                            to="/dashboard/notifications" 
+                            icon={<FaBell size={24} />} 
+                            text="Notifications" 
+                            isActive={location.pathname === '/dashboard/notifications'} 
                         />
                         <NavItem 
                             to="/messages" 

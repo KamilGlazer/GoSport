@@ -85,4 +85,20 @@ public class ProfileServiceImpl implements ProfileService {
                 .postalCode(savedUser.getCredentials().getPostalCode())
                 .build();
     }
+
+    @Override
+    public UserDetailsResponse getMyProfile(String token) {
+        String email = jwtService.extractUsername(token);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+        UserCredentials userCredentials = user.getCredentials();
+
+        return UserDetailsResponse.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .city(userCredentials.getCity())
+                .headline(userCredentials.getHeadline())
+                .postalCode(userCredentials.getPostalCode())
+                .mobile(userCredentials.getMobile())
+                .build();
+    }
 }

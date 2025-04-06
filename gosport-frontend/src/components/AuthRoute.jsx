@@ -1,18 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useSelector } from 'react-redux';
 
-const AuthRoute = ({ isPrivate }) => {
-  const { isValid, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <p>Sprawdzanie sesji...</p>;
-  }
-
+const AuthRoute = ({ isPrivate = false }) => {
+  const { token } = useSelector(state => state.auth);
+  
   if (isPrivate) {
-    return isValid ? <Outlet /> : <Navigate to="/login" />;
+    return token ? <Outlet /> : <Navigate to="/login" replace />;
+  } else {
+    return token ? <Navigate to="/dashboard" replace /> : <Outlet />;
   }
-
-  return isValid ? <Navigate to="/dashboard" /> : <Outlet />;
 };
 
 export default AuthRoute;
