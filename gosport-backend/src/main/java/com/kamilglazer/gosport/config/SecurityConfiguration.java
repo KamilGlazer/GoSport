@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .cors(c -> {})
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

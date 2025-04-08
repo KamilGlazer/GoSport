@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import LoadingBar from "../components/LoadingBar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {profileApi} from "../services/profileApi"
 import { setAvatar,setUserProfile } from '../store/authSlice';
 

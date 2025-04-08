@@ -29,6 +29,6 @@ public class SearchServiceImpl implements SearchService {
             lastName = parts[1];
         }
         List<User> users = userRepository.findByFirstNameContainingOrLastNameContaining(firstName,lastName);
-        return users.stream().map(user -> new UserSearch(user.getFirstName(),user.getLastName(),user.getCredentials().getProfileImage())).collect(Collectors.toList());
+        return users.stream().map(user -> new UserSearch(user.getId(),user.getFirstName(),user.getLastName(),user.getCredentials().getProfileImage())).collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import BasePage from './pages/BasePage'
 import Dashboard from './pages/DashboardPage';
 import ProfilePage from './pages/ProfilePage';
 import NotificationsPage from './pages/NotificationsPage';
+import PublicProfilePage from './pages/PublicProfilePage';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/profile" element={<ProfilePage />}/>
               <Route path="/dashboard/notifications" element={<NotificationsPage />}/>
+              <Route path="/dashboard/profile/:userId" element={<PublicProfilePage />} />
           </Route>
 
         </Routes>

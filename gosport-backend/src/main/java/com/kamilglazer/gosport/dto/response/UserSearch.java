@@ -10,7 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserSearch {
+     private Long userId;
      private String firstName;
      private String lastName;
      private String profileImage;
+
+     public String getProfileImage() {
+          return profileImage !=null ? "http://localhost:8080/uploads/" + profileImage : null;
+     }
+
 }

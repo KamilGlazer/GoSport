@@ -21,6 +21,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.user = action.payload.user || {};
             state.token = action.payload.token;
+            localStorage.setItem("token", action.payload.token);
         },
         loginFailure: (state,action) => {
             state.loading = false;
@@ -29,6 +30,7 @@ const authSlice = createSlice({
         logout : (state) => {
             state.user = null;
             state.token = null;
+            localStorage.removeItem("token");
         },
         setAvatar: (state, action) => {
             if (state.user) {
