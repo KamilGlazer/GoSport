@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaUserCircle, FaPhone, FaMapMarkerAlt,FaUserPlus, FaUserCheck, FaHourglassHalf  } from "react-icons/fa";
-import api from "../services/api";
+import {profileApi} from "../services/profileApi";
 
 const PublicProfilePage = () => {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [connectionStatus, setConnectionStatus] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                const response = await api.get(`/profile/${userId}`);
-                setUser(response.data);
+                const profileData = await profileApi.getPublicProfile(userId);
+                setUser(profileData);
+                setConnectionStatus(profileData.connectionStatus || null);
             } catch (err) {
                 console.error("Failed to load profile:", err);
             } finally {
@@ -22,6 +25,18 @@ const PublicProfilePage = () => {
 
         fetchUserProfile();
     }, [userId]);
+
+    const handleAddFriend = async () => {
+        setIsProcessing(true);
+        try {
+            await profileApi.sendConnectionRequest(userId);
+            setConnectionStatus("PENDING");
+        } catch (error) {
+            console.error("Failed to send connection request:", error);
+        } finally {
+            setIsProcessing(false);
+        }
+    };
 
     if (isLoading) return (
         <div>
@@ -55,28 +70,46 @@ const PublicProfilePage = () => {
                         )}
                     </div>
                     <div className="absolute -bottom-16 right-8 flex items-center space-x-2">
-                    {user.connectionStatus === null && (
-                        <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition">
-                            <FaUserPlus className="text-lg" />
-                            <span>Add Friend</span>
-                        </button>
-                    )}
+                        {connectionStatus === null && (
+                            <button 
+                                onClick={handleAddFriend}
+                                disabled={isProcessing}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-full shadow transition
+                                    ${isProcessing 
+                                        ? 'bg-gray-400 cursor-not-allowed' 
+                                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                    }`
+                                }
+                            >
+                                {isProcessing ? (
+                                    <>
+                                        <FaHourglassHalf className="text-lg animate-spin" />
+                                        <span>Processing...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <FaUserPlus className="text-lg" />
+                                        <span>Add Friend</span>
+                                    </>
+                                )}
+                            </button>
+                        )}
 
-                    {user.connectionStatus === "PENDING" && (
-                        <div className="flex items-center gap-2 text-yellow-700 bg-yellow-100 border border-yellow-300 px-4 py-2 rounded-full shadow">
-                            <FaHourglassHalf className="text-lg" />
-                            <span>Pending</span>
-                        </div>
-                    )}
+                        {connectionStatus === "PENDING" && (
+                            <div className="flex items-center gap-2 text-yellow-700 bg-yellow-100 border border-yellow-300 px-4 py-2 rounded-full shadow">
+                                <FaHourglassHalf className="text-lg" />
+                                <span>Request send</span>
+                            </div>
+                        )}
 
-                    {user.connectionStatus === "ACCEPTED" && (
-                        <div className="flex items-center gap-2 text-green-700 bg-green-100 border border-green-300 px-4 py-2 rounded-full shadow">
-                            <FaUserCheck className="text-lg" />
-                            <span>Friends</span>
-                        </div>
-                    )}
+                        {connectionStatus === "ACCEPTED" && (
+                            <div className="flex items-center gap-2 text-green-700 bg-green-100 border border-green-300 px-4 py-2 rounded-full shadow">
+                                <FaUserCheck className="text-lg" />
+                                <span>Friends</span>
+                            </div>
+                        )}
                     </div>
-                    </div>
+                </div>
 
                 <div className="pt-20 px-8 pb-8">
                     <div className="mb-6">
@@ -90,7 +123,6 @@ const PublicProfilePage = () => {
 
                     <div className="border-t border-b border-gray-200 py-6">
                         <div className="flex flex-wrap gap-8">
-
                             {user.mobile && (
                                 <div className="flex items-center text-gray-600">
                                     <FaPhone className="mr-2 text-blue-500" />
@@ -114,12 +146,10 @@ const PublicProfilePage = () => {
                         <div className="mt-6">
                             <h2 className="text-xl font-semibold text-gray-900 mb-4">About</h2>
                             <p className="text-gray-600">
-                                {user?.profile?.bio || "No additional information provided"}
+                                {user.bio || "No additional information provided"}
                             </p>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
         </div>
