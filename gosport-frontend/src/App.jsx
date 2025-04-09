@@ -24,10 +24,12 @@ function App() {
           <Route path="/" element={<BasePage />} />
           
           <Route element={<AuthRoute isPrivate={true} />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/profile" element={<ProfilePage />}/>
-              <Route path="/dashboard/notifications" element={<NotificationsPage />}/>
-              <Route path="/dashboard/profile/:userId" element={<PublicProfilePage />} />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<div className='mt-20'>Home Dashboard View</div>} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="profile/:userId" element={<PublicProfilePage />} />
+            </Route>
           </Route>
 
         </Routes>

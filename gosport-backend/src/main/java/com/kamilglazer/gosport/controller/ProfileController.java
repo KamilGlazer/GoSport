@@ -3,6 +3,7 @@ package com.kamilglazer.gosport.controller;
 
 import com.kamilglazer.gosport.config.JwtService;
 import com.kamilglazer.gosport.dto.response.UserDetailsResponse;
+import com.kamilglazer.gosport.dto.response.UserProfileResponse;
 import com.kamilglazer.gosport.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -22,8 +23,9 @@ public class ProfileController {
     private final JwtService jwtService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetailsResponse> getUserProfile(@PathVariable Long id){
-        return ResponseEntity.ok(profileService.getUserProfile(id));
+    public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable Long id, @RequestHeader("Authorization") String authHeader){
+        String token = jwtService.getToken(authHeader);
+        return ResponseEntity.ok(profileService.getUserProfile(id,token));
     }
 
     @GetMapping

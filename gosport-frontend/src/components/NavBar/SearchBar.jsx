@@ -57,7 +57,7 @@ const SearchBar = () => {
             </div>
             <input
                 type="text"
-                placeholder="Wyszukaj użytkowników..."
+                placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
@@ -105,7 +105,7 @@ const SearchBar = () => {
                         ))
                     ) : (
                         <div className="p-3 text-center text-gray-500">
-                            {query ? "Brak wyników" : "Wpisz zapytanie..."}
+                            {query ? "No results" : "Write query..."}
                         </div>
                     )}
                 </div>

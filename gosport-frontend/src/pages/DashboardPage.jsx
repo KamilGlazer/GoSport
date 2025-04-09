@@ -4,6 +4,8 @@ import LoadingBar from "../components/LoadingBar";
 import { useDispatch} from "react-redux";
 import {profileApi} from "../services/profileApi"
 import { setAvatar,setUserProfile } from '../store/authSlice';
+import { Outlet } from "react-router-dom";
+
 
 
 const LOADING_DELAY = 1500;
@@ -19,6 +21,8 @@ const DashboardPage = () => {
                     profileApi.getAvatar(),
                     profileApi.getProfile() 
                 ]);
+                
+                console.log("DASHOBARD!");
                 
                 dispatch(setAvatar(avatarUrl));
                 dispatch(setUserProfile(profileData));
@@ -43,15 +47,10 @@ const DashboardPage = () => {
     }
 
     return (
-        <div className="pt-16">
+        <div>
             <NavBar />
-            <main className="max-w-7xl mx-auto px-4 py-6">
-                <section className="text-center">
-                    <h1 className="text-2xl font-bold">Welcome to Your Dashboard</h1>
-                    <p className="mt-4 text-gray-600">Start building your application here</p>
-                </section>
-            </main>
-        </div>
+            <Outlet /> 
+      </div>
     );
 };
 

@@ -1,11 +1,15 @@
 package com.kamilglazer.gosport.service.impl;
 
 import com.kamilglazer.gosport.config.JwtService;
+import com.kamilglazer.gosport.domain.CONNECTION_STATUS;
 import com.kamilglazer.gosport.dto.response.UserDetailsResponse;
+import com.kamilglazer.gosport.dto.response.UserProfileResponse;
 import com.kamilglazer.gosport.exception.ProfileImageNotFoundException;
 import com.kamilglazer.gosport.exception.UserNotFoundException;
+import com.kamilglazer.gosport.model.Connection;
 import com.kamilglazer.gosport.model.User;
 import com.kamilglazer.gosport.model.UserCredentials;
+import com.kamilglazer.gosport.repository.ConnectionRepository;
 import com.kamilglazer.gosport.repository.UserCredentialsRepository;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.ProfileService;
@@ -14,6 +18,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
@@ -21,16 +27,25 @@ public class ProfileServiceImpl implements ProfileService {
     private final UserRepository userRepository;
     private final FileStorageService fileStorageService;
     private final JwtService jwtService;
-    private final UserCredentialsRepository userCredentialsRepository;
+    private final ConnectionRepository connectionRepository;
 
     @Override
-    public UserDetailsResponse getUserProfile(Long id) {
+    public UserProfileResponse getUserProfile(Long id, String token) {
+        String email = jwtService.extractUsername(token);
+        User loggedUser = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
-        return UserDetailsResponse.builder()
+
+        CONNECTION_STATUS connectionStatus = getConnectionStatusBetweenUsers(user.getId(), loggedUser.getId());
+
+        return UserProfileResponse.builder()
+                .userId(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .city(user.getCredentials().getCity())
+                .mobile(user.getCredentials().getMobile())
+                .profileImage(user.getCredentials().getProfileImage())
                 .headline(user.getCredentials().getHeadline())
+                .connectionStatus(connectionStatus)
                 .postalCode(user.getCredentials().getPostalCode())
                 .build();
     }
@@ -100,5 +115,19 @@ public class ProfileServiceImpl implements ProfileService {
                 .postalCode(userCredentials.getPostalCode())
                 .mobile(userCredentials.getMobile())
                 .build();
+    }
+
+
+
+    private CONNECTION_STATUS getConnectionStatusBetweenUsers(Long profileId, Long viewerId) {
+        if (Objects.equals(profileId, viewerId)) {
+            return null;
+        }
+
+        return connectionRepository
+                .findBySenderIdAndReceiverId(profileId, viewerId)
+                .or(() -> connectionRepository.findBySenderIdAndReceiverId(viewerId, profileId))
+                .map(Connection::getStatus)
+                .orElse(null);
     }
 }

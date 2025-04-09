@@ -18,17 +18,28 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<UserSearch> findByName(String query) {
-        String firstName = "";
-        String lastName = "";
+        if (query == null || query.isBlank()) {
+            return List.of();
+        }
 
-        String[] parts = query.split(" ");
-        if (parts.length > 0) {
-            firstName = parts[0];
+        String[] parts = query.trim().split("\\s+");
+        List<User> users;
+
+        if (parts.length == 1) {
+            String value = parts[0];
+            users = userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(value, value);
+        } else {
+            String firstName = parts[0];
+            String lastName = parts[1];
+            users = userRepository.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
         }
-        if (parts.length > 1) {
-            lastName = parts[1];
-        }
-        List<User> users = userRepository.findByFirstNameContainingOrLastNameContaining(firstName,lastName);
-        return users.stream().map(user -> new UserSearch(user.getId(),user.getFirstName(),user.getLastName(),user.getCredentials().getProfileImage())).collect(Collectors.toList());
+
+        return users.stream()
+                .map(user -> new UserSearch(
+                        user.getId(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getCredentials().getProfileImage()))
+                .collect(Collectors.toList());
     }
 }
