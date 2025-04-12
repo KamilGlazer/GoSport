@@ -98,7 +98,7 @@ const PublicProfilePage = () => {
                         {connectionStatus === "PENDING" && (
                             <div className="flex items-center gap-2 text-yellow-700 bg-yellow-100 border border-yellow-300 px-4 py-2 rounded-full shadow">
                                 <FaHourglassHalf className="text-lg" />
-                                <span>Request send</span>
+                                <span>Awaiting response</span>
                             </div>
                         )}
 

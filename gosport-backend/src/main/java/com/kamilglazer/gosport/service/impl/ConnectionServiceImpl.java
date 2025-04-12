@@ -2,18 +2,18 @@ package com.kamilglazer.gosport.service.impl;
 
 import com.kamilglazer.gosport.config.JwtService;
 import com.kamilglazer.gosport.domain.CONNECTION_STATUS;
-import com.kamilglazer.gosport.exception.ConnectionExistsException;
-import com.kamilglazer.gosport.exception.ConnectionNotFoundException;
-import com.kamilglazer.gosport.exception.IllegalConnectionAction;
-import com.kamilglazer.gosport.exception.UserNotFoundException;
+import com.kamilglazer.gosport.domain.NOTIFICATION_TYPE;
+import com.kamilglazer.gosport.exception.*;
 import com.kamilglazer.gosport.model.Connection;
+import com.kamilglazer.gosport.model.Notification;
 import com.kamilglazer.gosport.model.User;
 import com.kamilglazer.gosport.repository.ConnectionRepository;
+import com.kamilglazer.gosport.repository.NotificationRepository;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.ConnectionService;
+import com.kamilglazer.gosport.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
 
 @Service
@@ -23,6 +23,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     private final ConnectionRepository connectionRepository;
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public Void createConnection(Long id, String token) {
@@ -38,6 +39,13 @@ public class ConnectionServiceImpl implements ConnectionService {
         if(connectionStatus != null) {
             throw new ConnectionExistsException("Connection already exists");
         }
+
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setMessage(loggedUser.getFirstName() + " " + loggedUser.getLastName() + " has invited you to connect.");
+        notification.setType(NOTIFICATION_TYPE.CONNECTION_REQUEST);
+        notification.setMakerUser(loggedUser);
+        notificationRepository.save(notification);
 
         Connection connection = new Connection();
         connection.setSender(loggedUser);
@@ -55,7 +63,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if(id.equals(loggedUser.getId())) {
-            throw new ConnectionExistsException("Connection already exists");
+            throw new SameUserException("Connection already exists");
         }
 
         Connection connection = connectionRepository
@@ -63,11 +71,24 @@ public class ConnectionServiceImpl implements ConnectionService {
                 .or(() -> connectionRepository.findBySenderIdAndReceiverId(id, loggedUser.getId()))
                 .orElseThrow(() -> new ConnectionNotFoundException("Connection not found"));
 
+        if(loggedUser.getId().equals(connection.getSender().getId())) {
+            throw new SameUserException("You cannot update your own connection requests...");
+        }
+
         if ("DELETE".equalsIgnoreCase(action)) {
             connectionRepository.delete(connection);
         } else if ("ACCEPTED".equalsIgnoreCase(action)) {
+
             connection.setStatus(CONNECTION_STATUS.ACCEPTED);
             connectionRepository.save(connection);
+
+            Notification notification = new Notification();
+            notification.setType(NOTIFICATION_TYPE.CONNECTION_RESPONSE);
+            notification.setUser(user);
+            notification.setMessage(loggedUser.getFirstName() + " " + loggedUser.getLastName() + " has accepted your connection request.");
+            notification.setMakerUser(loggedUser);
+            notificationRepository.save(notification);
+
         } else {
             throw new IllegalConnectionAction("Invalid action: " + action);
         }

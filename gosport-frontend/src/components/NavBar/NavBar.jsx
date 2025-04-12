@@ -4,9 +4,26 @@ import logo from "../../assets/fans.png"
 import SearchBar from "./SearchBar";
 import NavItem from "./NavItem";
 import ProfileNavItem from "./ProfileNavItem";
+import { notificationApi } from "../../services/NotificationApi";
+import { useEffect, useState } from "react";
+
+
 
 const NavBar = () => {
     const location = useLocation();
+    const [unreadCount,setUnreadCount] = useState(0);
+
+    useEffect(() => {
+        const fetchUnread = async () => {
+            const count = await notificationApi.getUnreadCount();
+            setUnreadCount(count);
+        };
+
+        fetchUnread();
+        const interval = setInterval(fetchUnread, 10000); 
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <nav className="bg-white shadow-sm fixed top-0 w-full z-10">
             <div className="max-w-7xl mx-auto px-4">
@@ -27,12 +44,21 @@ const NavBar = () => {
                             text="Main Page" 
                             isActive={location.pathname === '/dashboard'} 
                         />
-                        <NavItem 
-                            to="/dashboard/notifications" 
-                            icon={<FaBell size={24} />} 
-                            text="Notifications" 
-                            isActive={location.pathname === '/dashboard/notifications'} 
-                        />
+                       <NavItem 
+    to="/dashboard/notifications" 
+    icon={
+        <div className="relative">
+            <FaBell size={24} />
+            {unreadCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {unreadCount}
+                </span>
+            )}
+        </div>
+    } 
+    text="Notifications" 
+    isActive={location.pathname === '/dashboard/notifications'} 
+/>
                         <NavItem 
                             to="/messages" 
                             icon={<FaEnvelope size={24} />} 

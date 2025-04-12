@@ -2,6 +2,7 @@ package com.kamilglazer.gosport.controller;
 
 
 
+import com.kamilglazer.gosport.config.JwtService;
 import com.kamilglazer.gosport.dto.response.UserSearch;
 import com.kamilglazer.gosport.service.SearchService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,12 @@ import java.util.List;
 public class SearchController {
 
     private final SearchService searchService;
+    private final JwtService jwtService;
 
     @GetMapping
-    public ResponseEntity<List<UserSearch>> searchUser(@RequestParam String query){
-        return ResponseEntity.ok(searchService.findByName(query));
+    public ResponseEntity<List<UserSearch>> searchUser(@RequestParam String query, @RequestHeader("Authorization") String authHeader) {
+        String token = jwtService.getToken(authHeader);
+        return ResponseEntity.ok(searchService.findByName(query,token));
     }
 
 }

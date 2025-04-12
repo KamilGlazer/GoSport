@@ -2,5 +2,7 @@ package com.kamilglazer.gosport.domain;
 
 public enum NOTIFICATION_TYPE {
     CONNECTION_REQUEST,
-    POST_LIKE
+    CONNECTION_RESPONSE,
+    POST_LIKE,
+    POST_COMMENT
 }

@@ -1,6 +1,8 @@
 package com.kamilglazer.gosport.service.impl;
 
+import com.kamilglazer.gosport.config.JwtService;
 import com.kamilglazer.gosport.dto.response.UserSearch;
+import com.kamilglazer.gosport.exception.UserNotFoundException;
 import com.kamilglazer.gosport.model.User;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.SearchService;
@@ -15,9 +17,14 @@ import java.util.stream.Collectors;
 public class SearchServiceImpl implements SearchService {
 
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Override
-    public List<UserSearch> findByName(String query) {
+    public List<UserSearch> findByName(String query,String token) {
+        String email = jwtService.extractUsername(token);
+        User loggedUser = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+
+
         if (query == null || query.isBlank()) {
             return List.of();
         }
@@ -33,6 +40,8 @@ public class SearchServiceImpl implements SearchService {
             String lastName = parts[1];
             users = userRepository.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
         }
+
+        users.remove(loggedUser);
 
         return users.stream()
                 .map(user -> new UserSearch(

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SearchService {
 
-    List<UserSearch> findByName(String query);
+    List<UserSearch> findByName(String query,String token);
 
 }

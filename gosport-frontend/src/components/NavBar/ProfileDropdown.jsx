@@ -51,15 +51,6 @@ const ProfileDropdown = ({ isOpen, onClose }) => {
                     <FaUser className="mr-3 text-gray-400" />
                     View Profile
                 </Link>
-                <Link 
-                    to="/settings" 
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    role="menuitem"
-                    onClick={onClose}
-                >
-                    <FaCog className="mr-3 text-gray-400" />
-                    Settings
-                </Link>
                 <button
                     className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-t border-gray-100"
                     role="menuitem"

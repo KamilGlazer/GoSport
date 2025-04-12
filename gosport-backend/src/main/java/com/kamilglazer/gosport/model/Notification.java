@@ -25,13 +25,20 @@ public class Notification {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "maker_id",nullable = false)
+    private User makerUser;
+
     @Enumerated(EnumType.STRING)
+    @Column(length = 30)
     private NOTIFICATION_TYPE type;
 
     private String message;
-    private boolean isRead;
+    private boolean isRead = false;
 
     private LocalDateTime createdAt;
+
+
 
     @PrePersist
     protected void onCreate() {
