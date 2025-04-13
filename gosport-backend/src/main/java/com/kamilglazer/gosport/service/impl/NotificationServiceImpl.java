@@ -39,6 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
         List<Notification> notifications = notificationRepository.findAllByUserOrderByIsReadAscCreatedAtDesc(loggedUser);
 
         return notifications.stream().map(notification -> NotificationResponse.builder()
+                .userId(notification.getMakerUser().getId())
                 .firstName(notification.getMakerUser().getFirstName())
                 .lastName(notification.getMakerUser().getLastName())
                 .type(notification.getType())

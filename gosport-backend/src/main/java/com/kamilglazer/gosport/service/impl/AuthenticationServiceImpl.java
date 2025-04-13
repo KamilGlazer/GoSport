@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
 
         user.setCredentials(new UserCredentials());
-        user.getCredentials().setProfileImage("default_avatar.webp");
+        user.getCredentials().setProfileImage("sbcf-default-avatar.png");
 
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

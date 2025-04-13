@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import { notificationApi } from "../services/NotificationApi";
+import { FaUserCircle } from "react-icons/fa";
 
 
 const NotificationsPage = () => {
     const [notifications, setNotifications] = useState([]);
+    const [acceptedRequests, setAcceptedRequests] = useState([]); // <- dodajemy
 
     useEffect(() => {
         const fetchAndMark = async () => {
-          const data = await notificationApi.getAll(); // ⬅️ najpierw pobierz
-          setNotifications(data);                      // ⬅️ pokaż użytkownikowi
-          setTimeout(() => {
-            notificationApi.markAllAsRead();           // ⬅️ oznacz jako przeczytane z opóźnieniem
-          }, 1000); // 1 sekunda opóźnienia, żeby użytkownik zauważył które były nieprzeczytane
+            const data = await notificationApi.getAll();
+            setNotifications(data);
+            setTimeout(() => {
+                notificationApi.markAllAsRead();
+            }, 1000);
         };
-      
+
         fetchAndMark();
-      }, []);
+    }, []);
+
+    const handleAccept = async (userId) => {
+        await notificationApi.acceptConnection(userId);
+        setAcceptedRequests((prev) => [...prev, userId]);
+    };
 
     return (
         <div className="mt-30 max-w-2xl mx-auto px-4">
@@ -29,7 +36,7 @@ const NotificationsPage = () => {
                         {notifications.map((n, index) => (
                             <li
                                 key={index}
-                                className={`flex items-start p-4 rounded-lg cursor-pointer transition  ${
+                                className={`flex items-start p-4 rounded-lg cursor-pointer transition ${
                                     !n.read ? "bg-blue-50 hover:bg-blue-200" : "bg-white hover:bg-gray-100"
                                 }`}
                             >
@@ -50,6 +57,34 @@ const NotificationsPage = () => {
                                         {n.message}
                                     </p>
                                     <p className="text-xs text-gray-400 mt-1">{new Date(n.createdAt).toLocaleString()}</p>
+
+                                    {n.type === "CONNECTION_REQUEST" && (
+                                        <div className="flex gap-2 mt-2">
+                                            {acceptedRequests.includes(n.userId) ? (
+                                                <button
+                                                    disabled
+                                                    className="px-3 py-1 text-sm bg-gray-400 text-white rounded cursor-not-allowed"
+                                                >
+                                                    Zaakceptowano
+                                                </button>
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        onClick={() => handleAccept(n.userId)}
+                                                        className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+                                                    >
+                                                        Akceptuj
+                                                    </button>
+
+                                                    <button
+                                                        className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+                                                    >
+                                                        Usuń zaproszenie
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </li>
                         ))}

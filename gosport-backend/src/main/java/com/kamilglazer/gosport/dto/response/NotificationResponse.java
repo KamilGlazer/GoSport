@@ -1,5 +1,6 @@
 package com.kamilglazer.gosport.dto.response;
 
+import com.kamilglazer.gosport.domain.CONNECTION_STATUS;
 import com.kamilglazer.gosport.domain.NOTIFICATION_TYPE;
 import com.kamilglazer.gosport.model.User;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationResponse {
+    private Long userId;
     private NOTIFICATION_TYPE type;
     private String message;
     private String firstName;

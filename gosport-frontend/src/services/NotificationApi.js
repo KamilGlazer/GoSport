@@ -29,5 +29,12 @@ export const notificationApi = {
     }
   },
 
+  acceptConnection: async (id) => {
+    try {
+      await api.patch(`/connection/${id}?action=ACCEPTED`);
+    } catch (error) {
+      console.error("Error accepting connection:", error);
+    }
+  },
   
 };
