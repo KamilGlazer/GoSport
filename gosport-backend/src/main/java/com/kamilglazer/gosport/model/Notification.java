@@ -35,9 +35,7 @@ public class Notification {
 
     private String message;
     private boolean isRead = false;
-
     private LocalDateTime createdAt;
-
 
 
     @PrePersist

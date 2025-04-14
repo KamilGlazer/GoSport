@@ -77,6 +77,9 @@ public class ConnectionServiceImpl implements ConnectionService {
 
         if ("DELETE".equalsIgnoreCase(action)) {
             connectionRepository.delete(connection);
+            notificationRepository.findByUserAndMakerUserAndType(loggedUser, user, NOTIFICATION_TYPE.CONNECTION_REQUEST)
+                    .or(() -> notificationRepository.findByUserAndMakerUserAndType(user, loggedUser, NOTIFICATION_TYPE.CONNECTION_REQUEST))
+                    .ifPresent(notificationRepository::delete);
         } else if ("ACCEPTED".equalsIgnoreCase(action)) {
 
             connection.setStatus(CONNECTION_STATUS.ACCEPTED);
@@ -89,6 +92,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             notification.setMakerUser(loggedUser);
             notificationRepository.save(notification);
 
+            notificationRepository.findByUserAndMakerUserAndType(loggedUser,user,NOTIFICATION_TYPE.CONNECTION_REQUEST).ifPresent(notificationRepository::delete);
         } else {
             throw new IllegalConnectionAction("Invalid action: " + action);
         }

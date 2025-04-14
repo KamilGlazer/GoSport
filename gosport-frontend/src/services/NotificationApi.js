@@ -36,5 +36,13 @@ export const notificationApi = {
       console.error("Error accepting connection:", error);
     }
   },
+
+  deleteConnection: async (id) => {
+    try {
+      await api.patch(`/connection/${id}?action=DELETE`);
+    } catch (error) {
+      console.error("Error deleting connection request:", error);
+    }
+  },
   
 };
