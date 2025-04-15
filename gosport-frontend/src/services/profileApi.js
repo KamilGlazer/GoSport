@@ -39,5 +39,8 @@ export const profileApi = {
             throw error;
         }
     },
+    editUserProfile: async (data) => {
+      return await api.put("/profile", data);
+    },
 };
 
