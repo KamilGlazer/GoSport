@@ -1,8 +1,7 @@
-package com.kamilglazer.gosport.controllerTests;
+package com.kamilglazer.gosport.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.dockerjava.api.exception.UnauthorizedException;
 import com.kamilglazer.gosport.config.JwtService;
 import com.kamilglazer.gosport.domain.USER_ROLE;
 import com.kamilglazer.gosport.dto.request.LoginRequest;
