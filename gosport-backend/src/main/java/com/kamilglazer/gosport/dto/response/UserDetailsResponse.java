@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDetailsResponse {
+    private Long userId;
     private String firstName;
     private String lastName;
     private String headline;

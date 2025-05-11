@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({UserNotFoundException.class, UserWithThisEmailAlreadyExists.class,ProfileImageNotFoundException.class, ConnectionExistsException.class,
-            ConnectionNotFoundException.class, IllegalConnectionAction.class, SameUserException.class, IllegalNotificationAction.class})
+            ConnectionNotFoundException.class, IllegalConnectionAction.class, SameUserException.class, IllegalNotificationAction.class, IllegalActionException.class,})
     public ResponseEntity<ErrorDetails> handleAllExceptions(Exception ex, WebRequest request) {
         return createErrorResponse(ex, request);
     }

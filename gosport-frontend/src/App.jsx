@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import NotificationsPage from './pages/NotificationsPage';
 import PublicProfilePage from './pages/PublicProfilePage';
 import MessagePage from './pages/MessagePage';
+import DashboardHome from './pages/DashBoardHome';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
           
           <Route element={<AuthRoute isPrivate={true} />}>
             <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<div className='mt-20'>Home Dashboard View</div>} />
+              <Route index element={<DashboardHome />} />
               <Route path='messages' element={<MessagePage />} />
               <Route path="profile" element={<ProfilePage />} />
               <Route path="notifications" element={<NotificationsPage />} />

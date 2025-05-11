@@ -108,6 +108,7 @@ public class ProfileServiceImpl implements ProfileService {
         UserCredentials userCredentials = user.getCredentials();
 
         return UserDetailsResponse.builder()
+                .userId(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .city(userCredentials.getCity())
