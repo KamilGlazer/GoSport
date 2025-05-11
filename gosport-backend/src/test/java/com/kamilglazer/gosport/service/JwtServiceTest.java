@@ -10,6 +10,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.lang.reflect.Field;
@@ -18,6 +20,7 @@ import java.util.Collections;
 import java.util.Date;
 import static org.assertj.core.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class JwtServiceTest {
 
     private JwtService jwtService;

@@ -1,12 +1,13 @@
 package com.kamilglazer.gosport.model;
 
-import java.time.LocalDateTime;
 import com.kamilglazer.gosport.domain.NOTIFICATION_TYPE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -22,11 +23,11 @@ public class Notification {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "maker_id",nullable = false)
+    @JoinColumn(name = "maker_id", nullable = false)
     private User makerUser;
 
     @Enumerated(EnumType.STRING)

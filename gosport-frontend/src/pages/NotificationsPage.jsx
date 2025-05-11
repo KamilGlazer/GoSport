@@ -86,7 +86,7 @@ const NotificationsPage = () => {
                           disabled
                           className="px-3 py-1 text-sm bg-gray-400 text-white rounded cursor-not-allowed"
                         >
-                          Usunięto zaproszenie
+                          Deleted
                         </button>
                       ) : (
                         <>

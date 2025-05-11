@@ -30,6 +30,7 @@ public class Message {
     private User receiver;
 
     @Column(nullable = false)
+    @Lob
     private String content;
 
     private LocalDateTime sendAt;

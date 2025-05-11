@@ -62,10 +62,10 @@ const NavBar = () => {
               isActive={location.pathname === "/dashboard/notifications"}
             />
             <NavItem
-              to="/messages"
+              to="/dashboard/messages"
               icon={<FaEnvelope size={24} />}
               text="Messages"
-              isActive={location.pathname === "/messages"}
+              isActive={location.pathname === "/dashboard/messages"}
             />
             <NavItem
               to="/trainers"
