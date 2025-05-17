@@ -2,6 +2,7 @@ package com.kamilglazer.gosport.service;
 
 import com.kamilglazer.gosport.dto.request.CommentRequest;
 import com.kamilglazer.gosport.dto.response.CommentResponse;
+import com.kamilglazer.gosport.rabbit.CommentNotificationPayload;
 
 import java.util.List;
 

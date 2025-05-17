@@ -25,6 +25,11 @@ spring:
       schema-locations: classpath:/data/schema.sql
       data-locations: classpath:/data/data.sql
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 server:
   port: ${CONTAINER_PORT:8080}

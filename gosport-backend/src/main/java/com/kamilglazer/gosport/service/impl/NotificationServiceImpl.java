@@ -2,10 +2,12 @@ package com.kamilglazer.gosport.service.impl;
 
 
 import com.kamilglazer.gosport.config.JwtService;
+import com.kamilglazer.gosport.domain.NOTIFICATION_TYPE;
 import com.kamilglazer.gosport.dto.response.NotificationResponse;
 import com.kamilglazer.gosport.exception.*;
 import com.kamilglazer.gosport.model.Notification;
 import com.kamilglazer.gosport.model.User;
+import com.kamilglazer.gosport.rabbit.CommentNotificationPayload;
 import com.kamilglazer.gosport.repository.NotificationRepository;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.NotificationService;
@@ -58,5 +60,18 @@ public class NotificationServiceImpl implements NotificationService {
         notifications.forEach(notification -> notification.setRead(true));
         notificationRepository.saveAll(notifications);
         return null;
+    }
+
+    @Override
+    public void createNotificationFromComment(CommentNotificationPayload payload) {
+        User user = userRepository.findById(payload.getReceiverId()).orElseThrow();
+        Notification notification = Notification.builder()
+                .user(user)
+                .makerUser(userRepository.findById(payload.getSenderId()).orElseThrow())
+                .message(user.getFirstName() + " " + user.getLastName() + " commented your post.")
+                .type(NOTIFICATION_TYPE.POST_COMMENT)
+                .isRead(false)
+                .build();
+        notificationRepository.save(notification);
     }
 }

@@ -181,4 +181,7 @@ public class AuthControllerIntegrationTest {
                 .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
+
+
+
 }

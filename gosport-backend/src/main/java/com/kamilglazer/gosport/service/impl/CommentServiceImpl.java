@@ -1,16 +1,15 @@
 package com.kamilglazer.gosport.service.impl;
 
 import com.kamilglazer.gosport.config.JwtService;
-import com.kamilglazer.gosport.domain.NOTIFICATION_TYPE;
 import com.kamilglazer.gosport.dto.request.CommentRequest;
 import com.kamilglazer.gosport.dto.response.CommentResponse;
 import com.kamilglazer.gosport.exception.IllegalActionException;
 import com.kamilglazer.gosport.model.Comment;
-import com.kamilglazer.gosport.model.Notification;
 import com.kamilglazer.gosport.model.Post;
 import com.kamilglazer.gosport.model.User;
+import com.kamilglazer.gosport.rabbit.CommentNotificationPayload;
+import com.kamilglazer.gosport.rabbit.NotificationProducer;
 import com.kamilglazer.gosport.repository.CommentRepository;
-import com.kamilglazer.gosport.repository.NotificationRepository;
 import com.kamilglazer.gosport.repository.PostRepository;
 import com.kamilglazer.gosport.repository.UserRepository;
 import com.kamilglazer.gosport.service.CommentService;
@@ -28,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final JwtService jwtService;
-    private final NotificationRepository notificationRepository;
+    private final NotificationProducer notificationProducer;
 
     @Override
     public CommentResponse addComment(String token, CommentRequest request) {
@@ -48,16 +47,15 @@ public class CommentServiceImpl implements CommentService {
         Comment saved = commentRepository.save(comment);
 
         if (!post.getUser().getId().equals(user.getId())) {
-            Notification notification = Notification.builder()
-                    .user(post.getUser())
-                    .makerUser(user)
-                    .type(NOTIFICATION_TYPE.POST_COMMENT)
-                    .message(user.getFirstName() + " " + user.getLastName() + " commented on your post.")
-                    .isRead(false)
-                    .build();
-            notificationRepository.save(notification);
+            notificationProducer.sendNotification(
+                    new CommentNotificationPayload(
+                            post.getId(),
+                            user.getId(),
+                            post.getUser().getId(),
+                            request.getContent()
+                    )
+            );
         }
-
         return mapToResponse(saved);
     }
 
