@@ -62,6 +62,14 @@ GoSport
 │── Application.java   # Spring Boot entry point
 </code></pre>
 
+### 🚀 Installation & Setup
+<hr>
+
+1. Clone the repository:
+<pre><code>git clone https://github.com/KamilGlazer/GoSport.git
+cd GoSport
+</code></pre>
+
 
 
 ### 📡 API Endpoints Overview
