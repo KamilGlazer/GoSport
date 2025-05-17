@@ -71,12 +71,24 @@ GoSport
 ### 🚀 Installation & Setup
 <hr>
 
-1. Clone the repository:
+Clone the repository:
 <pre><code>git clone https://github.com/KamilGlazer/GoSport.git
 cd GoSport
 </code></pre>
 
+*Backend & Database*
+1. In proggress
 
+*Frontend*
+1. Navigate to the frontend directory:
+<pre><code>cd gosport-frontend
+</code></pre>
+2. Install dependencies:
+<pre><code>npm install
+</code></pre>
+3. Start the development server
+<pre><code>npm run dev
+</code></pre>
 
 ### 📡 API Endpoints Overview
 <hr>
