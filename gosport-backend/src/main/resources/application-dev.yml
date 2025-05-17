@@ -2,10 +2,9 @@
 ACTIVE_PROFILE: dev
 
 #database
-MYSQL_HOST: localhost
+MYSQL_HOST: mysql
 MYSQL_PORT: 3306
 MYSQL_DATABASE: dev
-MYSQL_USERNAME: root
 MYSQL_PASSWORD: root
 
 #server

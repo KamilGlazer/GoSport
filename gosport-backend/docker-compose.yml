@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-cont
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-cont
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gosport-backend
+    depends_on:
+      - mysql
+      - rabbitmq
+    restart: on-failure
+    environment:
+      ACTIVE_PROFILE: dev
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: dev
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+      CONTAINER_PORT: 8080
+      SECRET_KEY: a3f5e0b9c2b57d8f1e1c3c4a2c6c7e1f8d3b6e2c5a7d8f9e0f1a2b3c4d5e6f7
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    volumes:
+      - ./uploads:/app/uploads
+
+volumes:
+  mysql_data:
+
+networks:
+  backend:

@@ -11,22 +11,23 @@ spring:
         format_sql: true
     show-sql: false
     database: mysql
+    defer-datasource-initialization: true
 
   datasource:
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}
-    username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
+    username: ${MYSQL_USERNAME:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   sql:
     init:
-      mode:
-      continue-on-error: false
-      schema-locations: classpath:/data/schema.sql
-      data-locations: classpath:/data/data.sql
+      platform: sql
+      mode: always
+      data-locations: classpath:data/data.sql
+
 
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
