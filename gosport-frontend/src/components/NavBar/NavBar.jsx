@@ -68,10 +68,10 @@ const NavBar = () => {
               isActive={location.pathname === "/dashboard/messages"}
             />
             <NavItem
-              to="/trainers"
+              to="/dashboard/trainers"
               icon={<FaUserFriends size={24} />}
               text="Trainers"
-              isActive={location.pathname === "/trainers"}
+              isActive={location.pathname === "/dashboard/trainers"}
             />
             <ProfileNavItem />
           </div>

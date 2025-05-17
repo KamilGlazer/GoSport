@@ -10,6 +10,7 @@ import NotificationsPage from './pages/NotificationsPage';
 import PublicProfilePage from './pages/PublicProfilePage';
 import MessagePage from './pages/MessagePage';
 import DashboardHome from './pages/DashBoardHome';
+import TrainersPage from './pages/TrainersPage';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               <Route index element={<DashboardHome />} />
               <Route path='messages' element={<MessagePage />} />
               <Route path="profile" element={<ProfilePage />} />
+              <Route path="trainers" element={<TrainersPage />} />
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="profile/:userId" element={<PublicProfilePage />} />
             </Route>

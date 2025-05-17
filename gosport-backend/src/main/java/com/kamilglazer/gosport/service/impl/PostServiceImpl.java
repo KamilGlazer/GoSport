@@ -7,11 +7,9 @@ import com.kamilglazer.gosport.dto.request.PostRequest;
 import com.kamilglazer.gosport.dto.response.PostResponse;
 import com.kamilglazer.gosport.exception.IllegalActionException;
 import com.kamilglazer.gosport.model.*;
-import com.kamilglazer.gosport.repository.NotificationRepository;
-import com.kamilglazer.gosport.repository.PostLikeRepository;
-import com.kamilglazer.gosport.repository.PostRepository;
-import com.kamilglazer.gosport.repository.UserRepository;
+import com.kamilglazer.gosport.repository.*;
 import com.kamilglazer.gosport.service.PostService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -34,6 +32,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final PostLikeRepository postLikeRepository;
     private final NotificationRepository notificationRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public PostResponse createPost(String token, PostRequest request) {
@@ -99,6 +98,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public void deletePost(String token, Long postId) {
         String email = jwtService.extractUsername(token);
         User user = userRepository.findByEmail(email)
@@ -106,6 +106,8 @@ public class PostServiceImpl implements PostService {
 
         Post post = postRepository.findById(postId).orElseThrow(() -> new UsernameNotFoundException("Post not found"));
         if(post.getUser().getId().equals(user.getId())) {
+            commentRepository.deleteAllByPost(post);
+            postLikeRepository.deleteAllByPost(post);
             postRepository.delete(post);
         }else{
             throw new IllegalActionException("You are not allowed to delete this post");
@@ -133,7 +135,7 @@ public class PostServiceImpl implements PostService {
                     .post(post)
                     .build();
             postLikeRepository.save(like);
-            if(!user.getId().equals(like.getUser().getId())) {
+            if(!user.getId().equals(post.getUser().getId())) {
                 Notification notification = Notification.builder()
                         .user(post.getUser())
                         .makerUser(user)

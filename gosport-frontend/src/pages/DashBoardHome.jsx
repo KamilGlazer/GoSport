@@ -193,6 +193,55 @@ const DashboardHome = () => {
           )}
         </div>
       ))}
+
+      {showConfirm && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md animate-fade-in">
+      <div className="flex flex-col items-center text-center space-y-4">
+        <div className="text-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 1010 10A10 10 0 0012 2z"/>
+          </svg>
+        </div>
+        <h2 className="text-lg font-semibold text-gray-800">Delete Post?</h2>
+        <p className="text-sm text-gray-500">
+          This action cannot be undone. Are you sure you want to delete this post?
+        </p>
+      </div>
+
+      <div className="flex gap-3 mt-6 flex justify-center">
+        <button
+          onClick={() => {
+            setShowConfirm(false);
+            setPostToDelete(null);
+          }}
+          className="px-4 py-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={async () => {
+            try {
+              await postApi.deletePost(postToDelete);
+              setPosts((prev) => prev.filter((p) => p.id !== postToDelete));
+            } catch (err) {
+              console.error("Error deleting post", err);
+            } finally {
+              setShowConfirm(false);
+              setPostToDelete(null);
+            }
+          }}
+          className="px-4 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 transition font-medium"
+        >
+          Yes, delete
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
