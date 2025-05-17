@@ -27,21 +27,21 @@
 ### 🛠 Technologies 
 <hr>
 
-- Java 17
+- **Java 17** - A modern, stable, and performant version of Java used for building robust backend logic.
 
-- Spring Boot 3.4.3
+- **Spring Boot 3.4.3** - Simplifies backend development with auto-configuration and a wide ecosystem for building production-ready REST APIs.
 
-- Spring Security + JWT
+- **Spring Security + JWT** - Provides secure authentication and authorization using stateless JWT tokens.
 
-- Spring Data JPA + Hibernate
+- **Spring Data JPA + Hibernate** - Simplifies database interactions using object-relational mapping (ORM) with powerful query capabilities.
 
-- MySQL
+- **MySQL** - A reliable and widely-used relational database for storing application data.
 
-- Lombok
+- **Lombok** - Reduces boilerplate code in Java classes through annotations for getters, setters, constructors, etc.
 
-- Swagger/OpenAPI 
+- **Swagger/OpenAPI** - Auto-generates interactive API documentation and allows easy testing of endpoints.
 
-- React + Redux 
+- **React + Redux** - Provides a responsive and interactive frontend with centralized state management for better scalability and maintainability.
 
 ### 📁 Project Structure
 <hr>
@@ -61,6 +61,12 @@ GoSport
 │   ├── impl           # Service implementations
 │── Application.java   # Spring Boot entry point
 </code></pre>
+
+### 🏗️ Architecture
+<hr>
+
+<img src="https://github.com/user-attachments/assets/b6d8a0b3-968b-4b6d-9ff5-b9db9f9feeb4" alt="Application Architecture" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
 
 ### 🚀 Installation & Setup
 <hr>
