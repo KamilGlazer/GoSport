@@ -43,6 +43,15 @@
 
 - **React + Redux** - Provides a responsive and interactive frontend with centralized state management for better scalability and maintainability.
 
+
+### 📷 Demo
+<hr>
+
+![image](https://github.com/user-attachments/assets/898e98d0-9148-4440-9517-7db4665910b4)
+
+
+![image](https://github.com/user-attachments/assets/072233c3-796f-4cb1-afe5-602cf42609ab)
+
 ### 📁 Project Structure
 <hr>
 
