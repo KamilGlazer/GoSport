@@ -29,7 +29,7 @@
 
 - **Java 17** - A modern, stable, and performant version of Java used for building robust backend logic.
 
-- **Spring Boot 3.4.3** - Simplifies backend development with auto-configuration and a wide ecosystem for building production-ready REST APIs.
+- **Spring Boot 3.4** - Simplifies backend development with auto-configuration and a wide ecosystem for building production-ready REST APIs.
 
 - **Spring Security + JWT** - Provides secure authentication and authorization using stateless JWT tokens.
 
@@ -77,7 +77,12 @@ cd GoSport
 </code></pre>
 
 *Backend & Database*
-1. In proggress
+1. Navigate to the backend directory:
+<pre><code>cd gosport-backend
+</code></pre>
+2. Enter command: 
+<pre><code>docker-compose up --build
+</code></pre>
 
 *Frontend*
 1. Navigate to the frontend directory:
