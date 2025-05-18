@@ -1,6 +1,6 @@
 <h1>GoSport - Social Platform for Athletes & Trainers 🏋️‍♂️🏃‍♀️</h1>
 
-<p>GoSport is a full-featured backend application for a social networking platform connecting athletes and trainers. Built with Spring Boot, it offers user registration, profiles, posts, comments, messaging, notifications, and trainer discovery based on location.</p>
+<p>GoSport is a full-featured application for a social networking platform connecting athletes and trainers. It offers user registration, profiles, posts, comments, messaging, notifications, and trainer discovery based on location.</p>
 
 ### ✨ Features
 
